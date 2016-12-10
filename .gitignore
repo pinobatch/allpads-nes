@@ -1,0 +1,19 @@
+*.sw[a-p]
+*.o
+*~
+*.chr
+/obj/nes/*.s
+/obj/nes/*.chr
+/obj/nes/*.pb53
+/zip.in
+*.nes.deb
+/map.txt
+/map218.txt
+/nsfmap.txt
+__pycache__/
+*.pyc
+
+# this is NES homebrew, not DSiWare
+*.DS_Store
+
+

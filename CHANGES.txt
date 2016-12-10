@@ -1,0 +1,53 @@
+r8-github (2016-12-10)
+* Applied zlib license
+
+r8 (2016-12-09)
+* Press Left, Fire, or Trigger to start test for analog controllers
+  (Mouse, Arkanoid, Zapper)
+
+r7 (2016-12-08)
+* Removed duplicate copy of low-level result instructions
+* Four Score, which occupies both controller ports, appears as "1-2P"
+* Press A, B, or 4 to start test for digital controllers
+  (NES, FC+mic, Four Score, FC with mic, Super NES, Power Pad)
+* Rewrote manual for new controller testing functionaltiy
+* Added (unused) zapkernel for forthcoming Zapper test
+
+r6 (2016-12-04)
+* Compressed font with PB53
+* Separate linker script to keep mapper 218 version under 64 kbit
+* Guesses and displays which controllers are connected.  Press Reset
+  twice for r5-style low-level results.
+* 218: Condensed low-level result instructions
+* Full: Displays pictures of controllers
+* Guesses the name and appearance of standard controllers based on
+  the console type implied by open bus (Famicom, NES-001, or NES-101)
+
+r5 (2016-11-30)
+* Changed open bus contrast value from $3F to $BF to make
+  bit 7 not appear as always 0
+* Added mapper 218 build with 64-tile font
+* Moved everything up above $E000 to allow use of 27C64 as PRG ROM
+
+r4 (2016-11-29)
+* Added controller names, images, and palettes to repo (not yet
+  used; will be used in a later version)
+* Made results easier to read by expressing them as individual bits
+
+r3 (2016-11-27)
+* Converted to CHR RAM
+* Updated font to use only 160 distinct tiles
+* Added result interpretation instructions 
+
+r2b (2015-03-28)
+* Wrote README for self-contained open bus test branch
+
+r2a (2015-03-26)
+* Fixed silly typo in open bus test
+
+r2 (2015-03-26)
+* Rewrote open bus test to account for PPU latch
+* Split controller test into separate lines for each port
+
+r1 (2015-03-25)
+* Initial release
