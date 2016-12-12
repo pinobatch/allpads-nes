@@ -343,18 +343,12 @@ loop:
 ; @param $02-$03 destination address
 .proc copydigits_add
 highDigits = $00
-leadingzero = $01
-dstlo = $02
-dsthi = $03
-  ldx copydigits_used
-  pha
-  
-  ; Load address
-  lda dsthi
-  sta PB53_outbuf+0,x
-  lda dstlo
-  sta PB53_outbuf+1,x
+prefixchr = $04
+hundreds  = $05
+tens      = $06
+ones      = $07
 
+  pha
   tya
   and #$80
   beq :+
@@ -363,55 +357,71 @@ dsthi = $03
     tay
     lda #$10
   :
-  sta leadingzero
-  lda font_tophalves-' ',y
-  sta PB53_outbuf+2,x
-  lda font_bottomhalves-' ',y
-  sta PB53_outbuf+6,x
-
-  ; Convert 3-digit number
+  sty prefixchr
+  ora #$20
+  sta tens
   pla
+
   jsr bcd8bit
-  
-  ; Last digit
-  tay
-  lda font_tophalves+'0'-' ',y
-  sta PB53_outbuf+5,x
-  lda font_bottomhalves+'0'-' ',y
-  sta PB53_outbuf+9,x
+  ora #'0'
+  sta ones
 
-  ; First digit
   lda highDigits
-  lsr a
-  lsr a
-  lsr a
-  lsr a
+  .repeat 4
+    lsr a
+  .endrepeat
   beq :+
-    ldy #$10
-    sty leadingzero
+    ldy #$30
+    sty tens
   :
-  ora leadingzero
-  tay
-  lda font_tophalves,y
-  sta PB53_outbuf+3,x
-  lda font_bottomhalves,y
-  sta PB53_outbuf+7,x
+  ora tens
+  sta hundreds
 
-  ; Middle digit
   lda highDigits
   and #$0F
   beq :+
-    ora #$10
+    ora #'0'
   :
-  ora leadingzero
-  tay
-  lda font_tophalves,y
-  sta PB53_outbuf+4,x
-  lda font_bottomhalves,y
-  sta PB53_outbuf+8,x
+  ora tens
+  sta tens
+  ; fall through to copydigits_add_4chars
+.endproc
+
+;;
+; Adds four characters to the copydigits buffer.
+; @param $02 destination VRAM address
+; @param $04 four ASCII characters ($20 through $7E)
+.proc copydigits_add_4chars
+ysave = $00
+dstlo = $02
+dsthi = $03
+chars = $04
+
+  ; Load address
+  ldx copydigits_used
+  lda dsthi
+  sta PB53_outbuf+0,x
+  lda dstlo
+  sta PB53_outbuf+1,x
   txa
   clc
   adc #10
   sta copydigits_used
+
+  ; Look up the glyph tiles
+  ldy #0
+  charloop:
+    lda chars,y
+    sty ysave
+    tay
+    lda font_tophalves-' ',y
+    sta PB53_outbuf+2,x
+    lda font_bottomhalves-' ',y
+    sta PB53_outbuf+6,x
+    inx
+    ldy ysave
+    iny
+    cpy #4
+    bcc charloop
   rts
 .endproc

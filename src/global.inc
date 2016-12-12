@@ -26,12 +26,15 @@
 .global reset_handler
 
 ; main.s
-.global main, nmi_handler, irq_handler, press_A, present
+.global main, nmi_handler, irq_handler, press_A, press_keys, present
 .global OAM
 .globalzp cur_keys, new_keys, oam_used, nmis
 
 ; lowlevel.s
 .global lowlevel_display
+
+; serialwatch.s
+.global serial_watch
 
 ; padgfx.s
 .global load_controller_tiles, load_controller_palette

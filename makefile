@@ -16,7 +16,7 @@ version = r8
 # Space-separated list of assembly language files that make up the
 # PRG ROM
 objlist = \
-  zappertest bg init main lowlevel padnames \
+  zappertest bg init main lowlevel serialwatch padnames \
   openbus identify padtest vaustest mousetest \
   pads ppuclear unpb53 bcd math
 objlistnrom = \

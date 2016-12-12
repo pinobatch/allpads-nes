@@ -31,8 +31,12 @@
   ldy #<results_msg
   jsr cls_puts_multiline
   jsr lowlevel_display_results
-  jsr press_A
-
+  lda #KEY_A|KEY_SELECT|KEY_START
+  jsr press_keys
+  and #KEY_SELECT
+  beq display_help
+    jmp serial_watch
+  display_help:
   lda #>lowlevel_page1
   ldy #<lowlevel_page1
   jsr cls_puts_multiline
@@ -185,9 +189,9 @@ initial_palette_end:
 line_discipline_codes:  .byte "01..S"
 
 results_msg:
-  .byte "Low-level controller port",10
-  .byte "probing results",10
-  .byte "Reset: return; Start: help",10
+  .byte "Low-level probing results",10
+  .byte "Select: Watch serial line;",10
+  .byte "Start: Help; Reset: Exit",10
   .byte "",10
   .byte "PPU readback",10
   .byte "",10

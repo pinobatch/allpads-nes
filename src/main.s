@@ -213,12 +213,18 @@ vw3:
 .endproc
 
 .proc press_A
+  lda #KEY_A|KEY_START
+.endproc
+.proc press_keys
+ok_keys = $07
+  sta ok_keys
+loop:
   jsr present
   ; Does player want to quit?
   jsr read_pads
   lda new_keys
-  and #KEY_A|KEY_START
-  beq press_A
+  and ok_keys
+  beq loop
   rts
 .endproc
 
