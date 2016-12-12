@@ -62,6 +62,7 @@ NUM_PADNAMES = 10
 .global seek_nt_line_y, seek_nt_line_a, draw_1_char
 .global hexdump8, hexdump8_02
 .global copydigits, copydigits_add_2s, copydigits_add
+.global copydigits_add_4chars
 .global copydigits_used
 LF = $0A
 .define NTXY(tx,ty) ((tx) | ((ty) * 64) | $2000)

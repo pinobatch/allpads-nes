@@ -1,4 +1,6 @@
-r8-github (2016-12-10)
+r9 (future)
+* copydigits: Can draw any four ASCII characters, not just digits
+* Serial watch: Read a 32-bit report from any serial line
 * Applied zlib license
 
 r8 (2016-12-09)

@@ -33,7 +33,10 @@ the Reset button on the Control Deck to rescan the ports.
 
 Press Reset before the scan finishes to display low-level data about
 which lines are always off, always on, serial, or not connected
-at all.  See docs/methodology.md for how it works under the hood.
+at all.  (See docs/methodology.md for how this works under the hood.)
+Then, if you have a standard controller in port 1 or are using the
+Famicom's hardwired controllers, press Select to begin watching a
+report of up to 32 bits on any serial line.
 
 Limits
 ------
@@ -59,6 +62,12 @@ Piano, or other hen's teeth.
 
 Rescanning requires Reset primarily because hot-swapping can
 occasionally cause a power sag that freezes the CPU.
+
+Serial watch doesn't work correctly on controllers where the act of
+reading a report itself has side effects.  These include the Arkanoid
+controller, which resets a 555-family timer, and the Super NES Mouse,
+which clears accumulated movement.  Reading controller 1 to choose a
+port and bit also causes the other controller to be read.
 
 Contact
 -------
