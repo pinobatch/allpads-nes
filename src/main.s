@@ -307,7 +307,7 @@ COPR = 127
 copr_screen:
   .byte "",LF
   .byte "",LF
-  .byte "Controller Test r8",LF
+  .byte "Controller Test r9",LF
   .byte COPR," 2016 Damian Yerrick",LF
   .byte "",LF
   .byte "Probing...",LF

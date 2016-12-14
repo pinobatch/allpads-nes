@@ -6,6 +6,7 @@
 /obj/nes/*.chr
 /obj/nes/*.pb53
 /zip.in
+/allpads-*.zip
 *.nes.deb
 /map.txt
 /map218.txt

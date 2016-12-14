@@ -11,7 +11,7 @@
 
 # These are used in the title of the NES program and the zip file.
 title = allpads
-version = r8
+version = r9
 
 # Space-separated list of assembly language files that make up the
 # PRG ROM
@@ -36,7 +36,7 @@ EMU := fceux
 DEBUGEMU := ~/.wine/drive_c/Program\ Files/FCEUX/fceux.exe
 # other options for EMU are start (Windows) or gnome-open (GNOME)
 
-.PHONY: run dist zip clean
+.PHONY: run debug dist zip clean all
 
 run: $(title).nes
 	$(EMU) $<
@@ -48,7 +48,7 @@ debug: $(title).nes
 # executable and key documentation) as the dependencies.
 dist: zip
 zip: $(title)-$(version).zip
-$(title)-$(version).zip: zip.in $(title).nes $(title)218.nes \
+$(title)-$(version).zip: zip.in all \
   README.md CHANGES.txt docs/methodology.md $(objdir)/index.txt
 	zip -9 -u $@ -@ < $<
 
@@ -62,6 +62,8 @@ $(objdir)/index.txt: makefile
 
 clean:
 	-rm $(objdir)/*.o $(objdir)/*.s $(objdir)/*.chr $(objdir)/*.pb53
+
+all: $(title).nes $(title)218.nes
 
 # Rules for PRG ROM
 

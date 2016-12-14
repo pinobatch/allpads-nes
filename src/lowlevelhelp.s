@@ -22,6 +22,7 @@
 ;
 .export lowlevel_page1, lowlevel_page2, lowlevel_page3, lowlevel_page4
 
+.rodata
 lowlevel_page1:
   .byte "To list controllers plugged",10
   .byte "into a Famicom or NES",10
