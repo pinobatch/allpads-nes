@@ -107,7 +107,7 @@ _nes2_chrsizehi = >sz1
 ; 'H' (horizontal mirroring, vertical arrangement)
 ; 'V' (vertical mirroring, horizontal arrangement)
 ; '4' (four-screen VRAM)
-; 218 (four-screen and vertical bits on, primarily for mapper 218)
+; 218 (four-screen VRAM + V bit, for mapper 218)
 .macro nes2mirror mir
 .local mi1
   mi1 = mir
@@ -118,7 +118,7 @@ _nes2_chrsizehi = >sz1
   .elseif mi1 = '4'
     _nes2_mirror = 8
   .elseif mi1 = 218
-    _nes2_mirror = 8
+    _nes2_mirror = 9
   .else
     .assert 0, error, "Mirroring mode must be 'H', 'V', or '4'"
   .endif
@@ -159,7 +159,7 @@ _nes2_chrsizehi = >sz1
   .endif
   .if tv1 = 'n' .or tv1 = 'N'
     _nes2_tvsystem = $00 | tv2
-  .elseif mi1 = 'p' .or mi1 = 'P'
+  .elseif tv1 = 'p' .or tv1 = 'P'
     _nes2_tvsystem = $01 | tv2
   .else
     .assert 0, error, "TV system must be 'N' or 'P'"
