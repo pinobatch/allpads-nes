@@ -11,7 +11,7 @@
 
 # These are used in the title of the NES program and the zip file.
 title = allpads
-version = r9
+version = 0.09
 
 # Space-separated list of assembly language files that make up the
 # PRG ROM
@@ -36,6 +36,13 @@ EMU := fceux
 DEBUGEMU := ~/.wine/drive_c/Program\ Files/FCEUX/fceux.exe
 # other options for EMU are start (Windows) or gnome-open (GNOME)
 
+# Windows doesn't put Python on the path
+ifdef COMSPEC
+PY := py -3
+else
+PY := python3
+endif
+
 .PHONY: run debug dist zip clean all
 
 run: $(title).nes
@@ -56,9 +63,11 @@ $(title)-$(version).zip: zip.in all \
 zip.in:
 	git ls-files | grep -e "^[^.]" > $@
 	echo zip.in >> $@
+	echo $(title).nes >> $@
+	echo $(title)218.nes >> $@
 
 $(objdir)/index.txt: makefile
-	echo Files produced by build tools go here, but caulk goes where? > $@
+	echo Files produced by build tools go here > $@
 
 clean:
 	-rm $(objdir)/*.o $(objdir)/*.s $(objdir)/*.chr $(objdir)/*.pb53
@@ -95,34 +104,34 @@ $(objdir)/padgfx.o: \
 # Rules for CHR
 
 $(objdir)/%.chr: $(imgdir)/%.png
-	tools/pilbmp2nes.py $< $@
+	$(PY) tools/pilbmp2nes.py $< $@
 
 $(objdir)/%16.chr: $(imgdir)/%.png
-	tools/pilbmp2nes.py -H 16 $< $@
+	$(PY) tools/pilbmp2nes.py -H 16 $< $@
 
 $(objdir)/%.pb53: $(objdir)/%
-	tools/pb53.py --raw $< $@
+	$(PY) tools/pb53.py --raw $< $@
 
 $(objdir)/fizzter.chr: $(imgdir)/fizztertiny.png
-	tools/cvtfont.py $< $@ -o $(objdir)/fizzterhalves.s --prefix font_
+	$(PY) tools/cvtfont.py $< $@ -o $(objdir)/fizzterhalves.s --prefix font_
 
 $(objdir)/fizzterhalves.s: $(objdir)/fizzter.chr
 	touch $@
 
 $(objdir)/mapper218font.chr: $(imgdir)/mapper218font.png
-	tools/cvtfont.py $< $@ -o $(objdir)/mapper218halves.s --prefix font_
+	$(PY) tools/cvtfont.py $< $@ -o $(objdir)/mapper218halves.s --prefix font_
 
 $(objdir)/mapper218halves.s: $(objdir)/mapper218font.chr
 	touch $@
 
 $(objdir)/controllerimages.chr: $(imgdir)/controllerimages.png
-	tools/pilbmp2nes.py -H 32 $< $@
+	$(PY) tools/pilbmp2nes.py -H 32 $< $@
 
 $(objdir)/controllerimages.chr.pb53: $(objdir)/controllerimages.chr
-	tools/pb53.py --block-size=32 --no-prev $< $@
+	$(PY) tools/pb53.py --block-size=32 --no-prev $< $@
 
 #$(objdir)/%c16.chr: $(objdir)/%.chr
-#	tools/dedupebin.py -c 16 --format u8 $(objdir)/controllerimages.chr controllerimagesu.chr controllerimagesmap.nam
+#	$(PY) tools/dedupebin.py -c 16 --format u8 $(objdir)/controllerimages.chr controllerimagesu.chr controllerimagesmap.nam
 #
 #$(objdir)/%.nam: $(objdir)/%c16.chr
 #	touch $@

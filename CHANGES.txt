@@ -1,9 +1,14 @@
+v0.09 (2021-05-30)
+* Repack of r9 without code or asset changes
+* Build tools: Use Python 3
+* Repository hygiene: Keep ROMs in releases rather than in the repo
+
 r9 (2016-12-13)
 * pads: Simplified controller reading in lowlevel, as we want to
   ignore controllers other than the primary one
 * copydigits: Can draw any four ASCII characters, not just digits
 * Serial watch: Read a 32-bit report from any serial line
-* Applied zlib license
+* License: zlib
 
 r8 (2016-12-09)
 * Press Left, Fire, or Trigger to start test for analog controllers
